@@ -4,20 +4,14 @@
   "description": "C-Tech Solutions Education Platform",
   "main": "server/server.js",
   "scripts": {
-    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
-    "server:dev": "nodemon server/server.js",
-    "client:dev": "http-server -c-1 C\\ tech\\ Solutions -p 3000",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "mkdir -p dist && cp -r C\\ tech\\ Solutions/* dist/ && cp -r Portfolio dist/ && cp *.html *.css *.js dist/",
-    "build:server": "echo 'Server build completed'",
-    "start": "node server/server.js",
-    "db:setup": "node server/setup-db.js",
-    "db:seed": "node server/seed-db.js",
-    "test": "jest",
-    "lint": "eslint server/**/*.js *.js",
-    "deploy": "npm run build && npm run deploy:server",
-    "deploy:server": "echo 'Deploy to your hosting platform'"
-  },
+  "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+  "server:dev": "nodemon server/server.js",
+  "client:dev": "http-server -c-1 C\\ tech\\ Solutions -p 3000",
+  "build": "npm run build:client && npm run build:server",
+  "build:client": "grunt",
+  "build:server": "echo 'Server build completed'"
+},
+
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
@@ -37,6 +31,7 @@
     "grunt-cli": "^1.5.0",
     "http-server": "^14.1.1",
     "jest": "^29.7.0",
+    "live-server": "^1.2.0",
     "nodemon": "^3.0.2"
   },
   "keywords": [
