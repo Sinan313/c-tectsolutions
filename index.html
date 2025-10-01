@@ -4,39 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C-Tech Solutions | Online Learning Platform</title>
-    <meta name="description" content="C-Tech Solutions is a premium online learning platform offering Digital Marketing, Web Development, Data Analysis, UI/UX Design, and AI courses, with a 98% success rate. Transform your career with expert instructors, job support, and comprehensive resources.">
-    <meta name="keywords" content="online learning, web development, digital marketing, data analysis, UI/UX design, AI courses, tech education, programming">
-    <meta name="author" content="C-Tech Solutions">
-    <meta name="robots" content="index, follow">
-    <!-- Open Graph -->
-    <meta property="og:title" content="C-Tech Solutions | Online Learning Platform">
-    <meta property="og:description" content="Premium online learning platform with 98% success rate. Learn Digital Marketing, Web Development, Data Science, and more.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ctechsolutions.com">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop&crop=face">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="C-Tech Solutions | Online Learning Platform">
-    <meta name="twitter:description" content="Transform your career with expert-led online courses in Digital Marketing, Web Dev, Data Science & more.">
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop&crop=face">
+    <meta name="description" content="C-Tech Solutions is a premium online learning platform offering Digital Marketing, Web Development, Data Analysis, UI/UX Design, and AI courses, with a 98% success rate.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎓</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="main.js" defer></script>
 </head>
 <body>
     <!-- Message Container -->
-   <div id="messageContainer" class="message" role="status" aria-live="polite">
-<a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="messageContainer" class="message" role="status" aria-live="polite"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <!-- Navigation -->
-  <header>
+    <header>
         <nav aria-label="Main Navigation">
             <div class="nav-container">
                 <div class="logo" onclick="showPageWithHistory('home')" style="cursor: pointer;">
-                    <img src="logo.png" alt="C-Tech Solutions Logo" class="logo-image-file" loading="lazy">
+                    <img src="logo.png" alt="C-Tech Solutions Logo" class="logo-image-file" loading="lazy" onerror="this.style.display='none'">
                     <div class="logo-text">
                         <div class="logo-image" aria-label="C-Tech Solutions">C</div>
                         <span>C-Tech Solutions</span>
@@ -78,9 +64,7 @@
                     <p class="tagline">Transforming Lives Through Online Learning</p>
                     <p class="intro">
                         Welcome to our premium digital learning platform! We're passionate about creating engaging, 
-                        accessible educational experiences that empower students to achieve their goals. 
-                        With over 8 years of experience in online education, we specialize in designing 
-                        courses that make complex topics simple and enjoyable.
+                        accessible educational experiences that empower students to achieve their goals.
                     </p>
                     <div class="cta-buttons">
                         <button class="btn btn-primary" onclick="showPageWithHistory('courses')">Explore Courses</button>
@@ -105,15 +89,7 @@
                         <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">Educator, Innovator, Mentor</h3>
                         <p style="margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.7;">
                             With a passion for education and technology, we've dedicated our mission to making 
-                            learning accessible, engaging, and effective for students worldwide. Our journey 
-                            began in traditional classrooms, but we quickly realized the immense potential 
-                            of online learning to reach and impact more lives.
-                        </p>
-                        <p style="margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.7;">
-                            We believe that every student has unique potential waiting to be unlocked. Through 
-                            personalized learning approaches, interactive content, and continuous support, 
-                            we help students not just learn, but truly understand and apply knowledge in 
-                            real-world scenarios. Our platform integrates with modern AI tools like Grok for enhanced learning support.
+                            learning accessible, engaging, and effective for students worldwide.
                         </p>
                         <div style="background: var(--bg-accent); padding: 2rem; border-radius: 15px; margin-top: 2rem;">
                             <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Our Credentials</h4>
@@ -127,7 +103,6 @@
                     </div>
                 </div>
 
-                <!-- Stats Section in About -->
                 <div class="stats-section" style="margin-top: 4rem; background: var(--bg-secondary); padding: 4rem 2rem; border-radius: 20px;">
                     <h3 style="text-align: center; font-size: 2rem; margin-bottom: 3rem; color: var(--primary-color);">Our Impact</h3>
                     <div class="stats-grid">

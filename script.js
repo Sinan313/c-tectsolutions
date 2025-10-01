@@ -177,9 +177,9 @@ function toggleAuthForm() {
     }
 }
 
-// Course filtering with debouncing for better performance
+// Course filtering with debouncing for better performance - FIXED
 let filterTimeout;
-function filterCourses(level) {
+function filterCourses(level, buttonElement) {
     clearTimeout(filterTimeout);
     filterTimeout = setTimeout(() => {
         const cards = document.querySelectorAll('.course-card');
@@ -187,7 +187,9 @@ function filterCourses(level) {
         
         // Update button states
         buttons.forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+        if (buttonElement) {
+            buttonElement.classList.add('active');
+        }
         
         // Filter cards with animation
         cards.forEach((card, index) => {
@@ -204,13 +206,15 @@ function filterCourses(level) {
     }, 100);
 }
 
-// Resources functionality
-function filterResourcesByTab(category) {
+// Resources functionality - FIXED
+function filterResourcesByTab(category, buttonElement) {
     currentResourceTab = category;
     
     // Update tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if (buttonElement) {
+        buttonElement.classList.add('active');
+    }
     
     // Filter resource boxes
     const resourceBoxes = document.querySelectorAll('.resource-box');
@@ -224,45 +228,8 @@ function filterResourcesByTab(category) {
     });
 }
 
-
-// Search resources functionality with API integration
-async function searchResources(query) {
-    const searchTerm = query.toLowerCase().trim();
-    
-    if (searchTerm) {
-        try {
-            // Search via API
-            const resources = await window.searchResourcesAPI(searchTerm);
-            
-            if (resources && resources.length > 0) {
-                // Update the resource grid with search results
-                updateResourceGrid(resources);
-                showMessage('success', `Found ${resources.length} resources matching "${query}"`);
-            } else {
-                showMessage('info', `No resources found matching "${query}"`);
-                // Show empty state or all resources
-                const allResources = await window.fetchResources(currentResourceTab);
-                updateResourceGrid(allResources || []);
-            }
-        } catch (error) {
-            console.error('Search error:', error);
-            // Fallback to client-side search
-            searchResourcesLocally(query);
-        }
-    } else {
-        // Load all resources for current category
-        try {
-            const resources = await window.fetchResources(currentResourceTab);
-            updateResourceGrid(resources || []);
-        } catch (error) {
-            console.error('Load resources error:', error);
-            searchResourcesLocally(query);
-        }
-    }
-}
-
-// Fallback local search function
-function searchResourcesLocally(query) {
+// Search resources functionality - FIXED (local search only)
+function searchResources(query) {
     const resourceBoxes = document.querySelectorAll('.resource-box');
     const searchTerm = query.toLowerCase().trim();
     let visibleCount = 0;
@@ -287,109 +254,27 @@ function searchResourcesLocally(query) {
     }
 }
 
-// Update resource grid with new data
-function updateResourceGrid(resources) {
-    const resourceGrid = document.getElementById('resourcesGrid');
-    if (!resourceGrid || !resources) return;
-    
-    // Clear existing resources
-    resourceGrid.innerHTML = '';
-    
-    // Add new resources
-    resources.forEach(resource => {
-        const resourceBox = createResourceBox(resource);
-        resourceGrid.appendChild(resourceBox);
-    });
-}
-
-// Create resource box element
-function createResourceBox(resource) {
-    const box = document.createElement('div');
-    box.className = 'resource-box';
-    box.dataset.category = resource.category;
-    
-    box.innerHTML = `
-        <img src="${resource.thumbnail}" alt="${resource.title}" class="resource-image">
-        <div class="resource-content">
-            <h3>${resource.title}</h3>
-            <p>${resource.description}</p>
-            <button class="expand-btn" onclick="expandResource(this)">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        <div class="resource-expanded">
-            <h4>${resource.title} - Complete Guide</h4>
-            <p>${resource.detailedDescription || resource.description}</p>
-            ${resource.learningOutcomes ? `
-                <ul>
-                    ${resource.learningOutcomes.map(outcome => `<li>${outcome}</li>`).join('')}
-                </ul>
-            ` : ''}
-            <div class="resource-actions">
-                <button class="btn btn-primary" onclick="downloadResource('${resource._id}')">Download PDF</button>
-                <button class="btn btn-secondary" onclick="viewResource('${resource._id}')">View Online</button>
-            </div>
-        </div>
-    `;
-    
-    return box;
-}
-
-// Resource action functions
-async function downloadResource(resourceId) {
-    try {
-        const response = await window.apiClient.downloadResource(resourceId);
-        if (response.data) {
-            showMessage('success', `Download started: ${response.data.filename}`);
-            // In a real app, you would trigger the actual download here
-            window.open(response.data.url, '_blank');
-        }
-    } catch (error) {
-        console.error('Download error:', error);
-        showMessage('error', 'Download failed. Please try again.');
-    }
-}
-
-function viewResource(resourceId) {
-    showMessage('info', 'Opening resource viewer...');
-    // Navigate to resource detail view
-    // This would typically open a modal or new page with the resource content
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    var logo = document.querySelector('.logo');
-    var logoImage = logo.querySelector('.logo-image-file');
-    var logoText = logo.querySelector('.logo-text');
-    if (logoImage && logoText) {
-        logoText.style.display = 'none';
-    }
-});
+// Search courses functionality
 function searchCourses(query) {
     query = query.toLowerCase();
     const cards = document.querySelectorAll('.courses-grid .course-card');
+    let visibleCount = 0;
+    
     cards.forEach(card => {
         const title = card.querySelector('h3').textContent.toLowerCase();
-        if (title.includes(query)) {
+        const description = card.querySelector('p')?.textContent.toLowerCase() || '';
+        
+        if (title.includes(query) || description.includes(query)) {
             card.style.display = '';
+            visibleCount++;
         } else {
             card.style.display = 'none';
         }
     });
-}
-function filterCourses(level) {
-    const cards = document.querySelectorAll('.courses-grid .course-card');
-    cards.forEach(card => {
-        if (level === 'all' || card.dataset.level === level) {
-            card.style.display = '';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-
-    // Update active button
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    const activeBtn = Array.from(document.querySelectorAll('.filter-btn')).find(btn => btn.textContent.toLowerCase().includes(level));
-    if (activeBtn) activeBtn.classList.add('active');
+    
+    if (query) {
+        showMessage('success', `Found ${visibleCount} courses matching "${query}"`);
+    }
 }
 
 // Expand/collapse resource boxes
@@ -402,12 +287,12 @@ function expandResource(button) {
         // Collapse
         expandedContent.classList.remove('show');
         button.classList.remove('expanded');
-        icon.style.transform = 'rotate(0deg)';
+        if (icon) icon.style.transform = 'rotate(0deg)';
     } else {
         // Expand
         expandedContent.classList.add('show');
         button.classList.add('expanded');
-        icon.style.transform = 'rotate(90deg)';
+        if (icon) icon.style.transform = 'rotate(90deg)';
     }
 }
 
@@ -415,7 +300,8 @@ function expandResource(button) {
 function toggleMoreCourses() {
     const hiddenCourses = document.querySelectorAll('.hidden-course');
     const button = document.getElementById('viewMoreCourses');
-    const icon = button.querySelector('i');
+    
+    if (!button) return;
     
     if (coursesExpanded) {
         // Collapse
@@ -439,8 +325,8 @@ function showCoursePreview(courseName) {
     showMessage('success', `Preview for "${courseName}" will open in a new window. Coming soon!`);
 }
 
-// Handle login form submission with API integration
-async function handleLogin(event) {
+// Handle login form submission - FIXED
+function handleLogin(event) {
     event.preventDefault();
     
     const email = document.getElementById('loginEmail');
@@ -460,53 +346,32 @@ async function handleLogin(event) {
         return;
     }
     
-    try {
-        // Show loading state
-        const submitBtn = event.target.querySelector('.auth-btn');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Signing in...';
-        submitBtn.disabled = true;
+    // Check credentials against demo accounts
+    const user = accounts.find(acc => acc.email === emailValue && acc.password === passwordValue);
+    
+    if (user) {
+        // Login successful
+        isLoggedIn = true;
+        currentUser = user;
+        showMessage('success', `Welcome back, ${user.name}! Login successful.`);
         
-        // Authenticate with API
-        const user = await window.authenticateUser({
-            email: emailValue,
-            password: passwordValue
-        });
+        // Switch to user navigation
+        switchToUserNavigation(user);
         
-        if (user) {
-            // Login successful
-            isLoggedIn = true;
-            currentUser = user;
-            showMessage('success', `Welcome back, ${user.name}! Login successful.`);
-            
-            // Close modal
-            closeModal('loginModal');
-            
-            // Switch to user navigation
-            switchToUserNavigation(user);
-            
-            // Update dashboard and profile with user data
-            await updateDashboardWithAPI();
-            updateProfile(user);
-            
-            // Redirect to dashboard after 1 second
-            setTimeout(() => {
-                showPageWithHistory('dashboard');
-            }, 1000);
-        }
+        // Update dashboard and profile with user data
+        updateDashboard(user);
+        updateProfile(user);
         
-        // Reset button state
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
+        // Clear form
+        email.value = '';
+        password.value = '';
         
-    } catch (error) {
-        // Reset button state
-        const submitBtn = event.target.querySelector('.auth-btn');
-        submitBtn.textContent = 'Sign In';
-        submitBtn.disabled = false;
-        
-        console.error('Login error:', error);
-        showMessage('error', error.message || 'Login failed. Please try again.');
+        // Redirect to dashboard after 1 second
+        setTimeout(() => {
+            showPageWithHistory('dashboard');
+        }, 1000);
+    } else {
+        showMessage('error', 'Invalid email or password. Try: mohammed@example.com / 123456');
     }
 }
 
@@ -577,6 +442,9 @@ function handleSignup(event) {
     // Update dashboard and profile
     updateDashboard(newUser);
     updateProfile(newUser);
+    
+    // Clear form
+    event.target.reset();
     
     // Redirect to dashboard after 2 seconds
     setTimeout(() => {
@@ -757,31 +625,12 @@ function toggleFAQ(element) {
 
 // Logout function
 function logout() {
-    // Call API logout
-    if (window.apiClient) {
-        window.logoutUser();
-    }
-    
     isLoggedIn = false;
     currentUser = null;
     coursesExpanded = false;
     switchToPublicNavigation();
     showPageWithHistory('home');
     showMessage('success', 'You have been logged out successfully.');
-}
-
-// Update dashboard with API data
-async function updateDashboardWithAPI() {
-    try {
-        const dashboardData = await window.fetchDashboardData();
-        if (dashboardData) {
-            updateDashboard(dashboardData.user, dashboardData.stats);
-        }
-    } catch (error) {
-        console.error('Failed to load dashboard data:', error);
-        // Fallback to demo data
-        updateDashboard(currentUser);
-    }
 }
 
 // Course enrollment with pricing and validation
@@ -816,32 +665,6 @@ function selectPlan(planName, price) {
         showMessage('warning', 'Please login to select a plan.');
         setTimeout(() => showLogin(), 1500);
     }
-}
-
-// Enhanced search functionality
-function searchCourses(query) {
-    const courses = document.querySelectorAll('.course-card');
-    const searchTerm = query.toLowerCase().trim();
-
-    if (!searchTerm) {
-        courses.forEach(course => course.style.display = 'block');
-        return;
-    }
-
-    let visibleCount = 0;
-    courses.forEach(course => {
-        const title = course.querySelector('h3')?.textContent.toLowerCase() || '';
-        const description = course.querySelector('p')?.textContent.toLowerCase() || '';
-        
-        if (title.includes(searchTerm) || description.includes(searchTerm)) {
-            course.style.display = 'block';
-            visibleCount++;
-        } else {
-            course.style.display = 'none';
-        }
-    });
-    
-    showMessage('success', `Found ${visibleCount} courses matching "${query}"`);
 }
 
 // Newsletter subscription with validation
@@ -1026,8 +849,8 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
         console.log('C-Tech Solutions Platform Ready!');
         console.log('Demo accounts available:');
-        console.log('   • Email: mohammed@example.com | Password: password');
-        console.log('   • Email: sarah@example.com | Password: password');
+        console.log('  • Email: mohammed@example.com | Password: 123456');
+        console.log('  • Email: sarah@example.com | Password: 313313');
         console.log('Features: Resources section, Enhanced profile, Logo integration, Responsive design');
         console.log('Mobile optimized with touch-friendly navigation');
         console.log('Accessibility: WCAG 2.1 compliant with keyboard navigation');
@@ -1065,13 +888,23 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
+        // Initialize logo handling
+        const logo = document.querySelector('.logo');
+        if (logo) {
+            const logoImage = logo.querySelector('.logo-image-file');
+            const logoText = logo.querySelector('.logo-text');
+            if (logoImage && logoText) {
+                logoText.style.display = 'none';
+            }
+        }
+        
     } catch (error) {
         console.error('Initialization error:', error);
         showMessage('error', 'Application initialization failed. Please refresh the page.');
     }
 });
 
-// Export for potential module use
+// Export functions for potential module use
 window.CtechPlatform = {
     showPage: showPageWithHistory,
     login: handleLogin,
