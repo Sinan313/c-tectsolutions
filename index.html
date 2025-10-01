@@ -3,69 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="C-Tech Solutions - Premium online learning platform offering Digital Marketing, Web Development, Data Analysis, UI/UX Design and AI courses with 98% success rate">
+    <title>C-Tech Solutions | Online Learning Platform</title>
+    <meta name="description" content="C-Tech Solutions is a premium online learning platform offering Digital Marketing, Web Development, Data Analysis, UI/UX Design, and AI courses, with a 98% success rate. Transform your career with expert instructors, job support, and comprehensive resources.">
     <meta name="keywords" content="online learning, web development, digital marketing, data analysis, UI/UX design, AI courses, tech education, programming">
     <meta name="author" content="C-Tech Solutions">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="C-Tech Solutions - Transform Your Career Through Online Learning">
+    <!-- Open Graph -->
+    <meta property="og:title" content="C-Tech Solutions | Online Learning Platform">
     <meta property="og:description" content="Premium online learning platform with 98% success rate. Learn Digital Marketing, Web Development, Data Science, and more.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ctechsolutions.com">
     <meta property="og:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop&crop=face">
-    <title>C-Tech Solutions - Transform Your Career Through Online Learning</title>
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="C-Tech Solutions | Online Learning Platform">
+    <meta name="twitter:description" content="Transform your career with expert-led online courses in Digital Marketing, Web Dev, Data Science & more.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop&crop=face">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎓</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
     <!-- Message Container -->
-    <div id="messageContainer" class="message"></div>
-
+   <div id="messageContainer" class="message" role="status" aria-live="polite">
+<a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo" onclick="showPageWithHistory('home')" style="cursor: pointer;">
-                <img src="logo.png" alt="C-Tech Solutions Logo" class="logo-image-file">
-                <div class="logo-text">
-                    <div class="logo-image">C</div>
-                    <span>C-Tech Solutions</span>
-                </div>
-            </div>
-            
-            <ul class="nav-links" id="publicNav">
-                <li><a onclick="showPageWithHistory('home')" class="active">Home</a></li>
-                <li><a onclick="showPageWithHistory('about')">About</a></li>
-                <li><a onclick="showPageWithHistory('courses')">Courses</a></li>
-                <li><a onclick="showPageWithHistory('resources')">Resources</a></li>
-                <li><a onclick="showPageWithHistory('students')">Students</a></li>
-                <li><a onclick="showPageWithHistory('fees')">Fees</a></li>
-                <!--<li><a onclick="showPageWithHistory('contact')">Contact</a></li>-->
-            </ul>
-            
-            <ul class="nav-links" id="userNav" style="display: none;">
-                <li><a onclick="showPageWithHistory('dashboard')" class="active">Dashboard</a></li>
-                <li><a onclick="showPageWithHistory('resources')">Resources</a></li>
-                <li class="dropdown">
-                    <a onclick="toggleAccountDropdown()" class="account-dropdown">Account <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-menu" id="accountDropdown">
-                        <a onclick="showPageWithHistory('profile')">Profile</a>
-                        <a onclick="logout()">Sign Out</a>
+  <header>
+        <nav aria-label="Main Navigation">
+            <div class="nav-container">
+                <div class="logo" onclick="showPageWithHistory('home')" style="cursor: pointer;">
+                    <img src="logo.png" alt="C-Tech Solutions Logo" class="logo-image-file" loading="lazy">
+                    <div class="logo-text">
+                        <div class="logo-image" aria-label="C-Tech Solutions">C</div>
+                        <span>C-Tech Solutions</span>
                     </div>
-                </li>
-            </ul>
+                </div>
+                <ul class="nav-links" id="publicNav">
+                    <li><a onclick="showPageWithHistory('home')" class="active" aria-current="page" tabindex="0">Home</a></li>
+                    <li><a onclick="showPageWithHistory('about')" tabindex="0">About</a></li>
+                    <li><a onclick="showPageWithHistory('courses')" tabindex="0">Courses</a></li>
+                    <li><a onclick="showPageWithHistory('resources')" tabindex="0">Resources</a></li>
+                    <li><a onclick="showPageWithHistory('students')" tabindex="0">Students</a></li>
+                    <li><a onclick="showPageWithHistory('fees')" tabindex="0">Fees</a></li>
+                </ul>
+                <ul class="nav-links" id="userNav" style="display: none;">
+                    <li><a onclick="showPageWithHistory('dashboard')" class="active" aria-current="page" tabindex="0">Dashboard</a></li>
+                    <li><a onclick="showPageWithHistory('resources')" tabindex="0">Resources</a></li>
+                    <li class="dropdown">
+                        <a onclick="toggleAccountDropdown()" class="account-dropdown" aria-haspopup="true" aria-expanded="false" tabindex="0">Account <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu" id="accountDropdown" role="menu">
+                            <a onclick="showPageWithHistory('profile')" tabindex="0">Profile</a>
+                            <a onclick="logout()" tabindex="0">Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" tabindex="0">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="login-btn" id="loginButton" onclick="showLogin()" tabindex="0" aria-label="Login to your account">Login</div>
+            </div>
+        </nav>
+    </header>
 
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <div class="login-btn" id="loginButton" onclick="showLogin()">Login</div>
-        </div>
-    </nav>
-
-    <main id="main-content">
+    <main id="main-content" role="main">
         <!-- Home/Hero Section -->
         <section id="home" class="hero">
             <div class="hero-container">
