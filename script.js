@@ -9,13 +9,13 @@ let coursesExpanded = false;
 const accounts = [
     { 
         email: 'mohammed@example.com', 
-        password: 'password', 
+        password: '123456', 
         name: 'Mohammed Sinan C', 
         phone: '+91 9876543210' 
     },
     { 
         email: 'sarah@example.com', 
-        password: 'password', 
+        password: '313313', 
         name: 'Sarah Wilson', 
         phone: '+1 (555) 987-6543' 
     }
