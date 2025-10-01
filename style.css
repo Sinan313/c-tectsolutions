@@ -297,7 +297,26 @@ main,
 .message.warning {
     background: var(--warning-color);
 }
-
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  background: #2b6cb0;
+  color: #fff;
+  z-index: 1000;
+}
+.skip-link:focus {
+  left: 10px;
+  top: 10px;
+  width: auto;
+  height: auto;
+  padding: 10px 20px;
+  border-radius: 8px;
+  outline: 2px solid #fff;
+}
 /* Warning styles */
 .warning {
     background: rgba(237, 137, 54, 0.1);
@@ -1011,7 +1030,102 @@ main,
     background: var(--text-muted);
     color: white;
 }
+/* Responsive Pricing Table */
+.pricing-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 2rem;
+}
+.pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm, 0 2px 12px rgba(0,0,0,0.07));
+    overflow: hidden;
+}
+.pricing-table th, .pricing-table td {
+    padding: 1.2rem;
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+    font-size: 1.1rem;
+    color: #2d3748;
+}
+.pricing-table th {
+    background: #f7fafc;
+    font-weight: 700;
+    color: #2b6cb0;
+    position: relative;
+}
+.pricing-popular {
+    background: #ebf8ff !important;
+    color: #2b6cb0 !important;
+    border-left: 4px solid #3182ce;
+    border-right: 4px solid #3182ce;
+}
+.popular-badge {
+    background: #3182ce;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    padding: 0.2em 0.8em;
+    margin-left: 0.5em;
+    vertical-align: middle;
+    font-weight: 600;
+    display: inline-block;
+}
+@media (max-width: 768px) {
+    .pricing-table, .pricing-table thead, .pricing-table tbody, .pricing-table tr, .pricing-table th, .pricing-table td {
+        display: block;
+        width: 100%;
+    }
+    .pricing-table tr {
+        margin-bottom: 1.5rem;
+    }
+    .pricing-table th {
+        text-align: left;
+        border-radius: 8px 8px 0 0;
+    }
+    .pricing-table td {
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid #e6e6e6;
+        position: relative;
+        padding-left: 40%;
+    }
+    .pricing-table td::before {
+        content: attr(data-label) ": ";
+        position: absolute;
+        left: 1.2rem;
+        font-weight: 600;
+        color: #4a5568;
+    }
+}
 
+/* Error message styling */
+.error-message {
+    color: #e53e3e;
+    font-size: 0.95em;
+    margin-top: 0.4em;
+    display: block;
+    min-height: 1.2em;
+}
+
+/* WCAG Color contrast and button focus */
+.btn-primary, .btn-secondary {
+    color: #fff;
+    background: #2b6cb0;
+}
+.btn-secondary {
+    background: #4fd1c5;
+    color: #1a202c;
+}
+.btn-primary:focus, .btn-secondary:focus, a:focus {
+    outline: 3px solid #3182ce;
+    outline-offset: 2px;
+}
+
+/* Add other semantic/grid accessibility as in previous code */
 /* Miscellaneous Content */
 .misc-content {
     padding: 1.5rem;
